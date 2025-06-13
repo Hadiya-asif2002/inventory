@@ -1,8 +1,9 @@
 <?php
+namespace Database;
 require_once dirname(__FILE__,2) . '/vendor/autoload.php';
 
 use \Illuminate\Database\Capsule\Manager as Capsule;
-
+use \Exception;
 
 
 $env = parse_ini_file(".env");

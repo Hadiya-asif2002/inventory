@@ -17,7 +17,6 @@ class User {
         if(!$userExists) {
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
             $user = Capsule::table('users')->insert($data);
-            
             return $user;
         }
         return false;

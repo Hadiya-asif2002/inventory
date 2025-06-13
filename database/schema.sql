@@ -2,7 +2,7 @@ CREATE DATABASE inventory_management;
 USE  inventory_management;
 CREATE TABLE departments(
    id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
-   name  VARCHAR(50) NOT NULL,
+   name  VARCHAR(50) UNIQUE NOT NULL,
    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -22,8 +22,11 @@ CREATE TABLE inventory_items(
     id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
     name VARCHAR(50) NOT NULL ,
     value VARCHAR(50),
-       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    category VARCHAR(50),
+    subcategory VARCHAR(50),
+    quantity VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE assigned_inventory(
