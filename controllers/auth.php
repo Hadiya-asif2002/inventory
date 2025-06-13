@@ -6,12 +6,11 @@ require_once dirname(__FILE__, 2) . '/vendor/autoload.php';
 use \Illuminate\Database\Capsule\Manager as Capsule;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-
-
 use \Carbon\Carbon;
 use Mail\Mail;
 use Helpers\Helpers;
 $key = parse_ini_file('.env')['JWT_KEY'];
+
 define('JWT_KEY', $key);
 class Auth
 {
@@ -25,7 +24,6 @@ class Auth
             return false;
         }
         if (password_verify($data['password'], $user['password'])) {
-            $key = 'example_key';
             $expiresAt = time() + 3600;
             $payload = [
                 'iss' => 'http://example.org',
@@ -36,7 +34,7 @@ class Auth
                 'id' => $user['id'],
                 'email' => $user['email']
             ];
-            $jwt = JWT::encode($payload, $key, 'HS256');
+            $jwt = JWT::encode($payload,  JWT_KEY, 'HS256');
             $authHeader = ['Authorization: Bearer ' . $jwt];
             setcookie('Authorization', $jwt, time() + 3600);
             return Helpers::sendJsonResponse(200, 'Logged in successfully.', [], $authHeader);
