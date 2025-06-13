@@ -1,0 +1,33 @@
+{
+    "name": "hadiya.asif/inventory",
+    "description": "inventory management for employees",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Hadiya Asif"
+        }
+    ],
+    "require": {
+        "illuminate/database": "^12.18",
+        "illuminate/events": "^12.18",
+        "railsware/mailtrap-php": "^3.1",
+        "guzzlehttp/guzzle": "^7.9",
+        "php-http/guzzle7-adapter": "^1.1",
+        "firebase/php-jwt": "^6.11"
+    },
+    "autoload": {
+    "psr-4": {
+        "Routes\\": "Routes/",
+        "Database\\":"database/",
+        "Controllers\\":"controllers/",
+        "Mail\\":"Mail/",
+        "Helpers\\":"Helpers/"
+
+    }
+},
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}
