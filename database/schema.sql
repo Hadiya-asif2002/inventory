@@ -31,10 +31,12 @@ CREATE TABLE inventory_items(
 
 CREATE TABLE assigned_inventory(
     id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
-    employee_id INT,
-    item VARCHAR(30),
-       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    employee_id INT NOT NULL,
+    item_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES inventory_items(id) ON DELETE CASCADE
 );
 
 CREATE TABLE users(

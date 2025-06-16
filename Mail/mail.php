@@ -23,7 +23,7 @@ class Mail
     );
 
     $email = (new MailtrapEmail())
-      ->from(new Address('hello@demomailtrap.co', 'Mailtrap Test'))
+      ->from(new Address($fromAddress, 'Mailtrap Test'))
       ->to(new Address("hadiya.asif@devbunch.com"))
       ->templateUuid('496d735e-3419-4aea-bba1-570822d0b8c7')
       ->templateVariables([
@@ -39,4 +39,3 @@ class Mail
   }
 
 }
-

@@ -10,7 +10,7 @@ class EmployeeController
     {
         $employees = Capsule::table('employees')->get();
         $employees = json_decode(json_encode($employees), true);
-        return Helpers::sendJsonResponse(200, 'employees retrieved successfully.', $employees);
+        Helpers::sendJsonResponse(200, 'employees retrieved successfully.', $employees);
     }
 
     public static function create($data)
@@ -22,9 +22,9 @@ class EmployeeController
                 $data['department_id'] = $departmentId;
                 $employee = Capsule::table('employees')->insert($data);
             } catch (PDOException $e) {
-                return Helpers::sendJsonResponse(400, 'Department does not exists.');
+                Helpers::sendJsonResponse(400, 'Department does not exists.');
             }
-            return Helpers::sendJsonResponse(201, 'Employee created successfully.', $employee);
+            Helpers::sendJsonResponse(201, 'Employee created successfully.', $employee);
         }
     }
 
@@ -41,14 +41,14 @@ class EmployeeController
                 $data['department_id'] = $departmentId;
                 unset($data['id']);
                 $employee = Capsule::table('employees')->where('name', '=', $data['name'])->update($data);
-                return Helpers::sendJsonResponse(200, 'employee updated successfully', $employee);
+                Helpers::sendJsonResponse(200, 'employee updated successfully', $employee);
             } else {
                 $message = 'Department does not exists.';
             }
         } catch (PDOException $e) {
             var_dump($e->getMessage());
         }
-        return Helpers::sendJsonResponse(400, $message);
+        Helpers::sendJsonResponse(400, $message);
 
     }
 
@@ -57,9 +57,9 @@ class EmployeeController
 
         $deleted = Capsule::table('employees')->where('id', '=', $data['id'])->delete();
         if ($deleted) {
-            return Helpers::sendJsonResponse(200, 'Employee deleted successfully.');
+            Helpers::sendJsonResponse(200, 'Employee deleted successfully.');
         } else {
-            return Helpers::sendJsonResponse(404, 'Employee not found.');
+            Helpers::sendJsonResponse(404, 'Employee not found.');
         }
     }
 }

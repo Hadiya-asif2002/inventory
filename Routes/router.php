@@ -53,13 +53,4 @@ class Router
     }
 
 
-    public static function get($url, $target) {
-        addRoute('GET', $url, $target);
-    }
-    public static function post($url, $target) {
-
-    }
-    public static function delete($url, $target) {
-
-    }
 }

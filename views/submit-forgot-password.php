@@ -210,6 +210,6 @@
     <!-- Page JS -->
 
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"  integrity="sha384-hD5btSM4RcVQ7x9+YMCbzCV8+pnE+eeuEfCjdtAtHn1furoitQFjLovzjNl/O1zV" crossorigin="anonymous"></script>
   </body>
 </html>

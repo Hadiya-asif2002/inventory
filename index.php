@@ -1,17 +1,11 @@
 <?php
+
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/database/database.php';
+
 use Routes\Router;
 $router = new Router();
-// how to group routes by controller name and method i guess we don't need to group by method and controller name
-// laravel routes  calls the static ::get method to add the get route and ::post method to add the post route
-// routes = [
-//          'controllername'=>[
-//                    url,
-//                    target
-//         ]
-// on home page create on api to load all departments and employees and assigned inventory instead of three different apis
-// to improve the code structure
+
 $postRoutes = [
    [
       'url' => '/login',
@@ -53,6 +47,23 @@ $postRoutes = [
       'url' => '/employees/employee',
       'target' => ['Controllers\EmployeeController', 'update']
    ],
+   [
+      'url' => '/inventory-items',
+      'target' => ['Controllers\InventoryController', 'create']
+   ],
+   [
+      'url' => '/inventory-items/item',
+      'target' => ['Controllers\InventoryController', 'update']
+   ],
+    [
+      'url' => '/employees/employee/inventory-items',
+      'target' => ['Controllers\AssignInventoryController', 'create']
+    ],
+    [
+      'url' => '/employees/employee/inventory-items/item',
+      'target' => ['Controllers\AssignInventoryController', 'update']
+    ],
+
 ];
 $getRoutes = [
    [
@@ -83,6 +94,14 @@ $getRoutes = [
       'url' => '/employees',
       'target' => ['Controllers\EmployeeController', 'index']
    ],
+   [
+      'url' => '/inventory-items',
+      'target' => ['Controllers\InventoryController', 'index']
+   ],
+   [
+      'url' => '/employees/employee/inventory-items',
+      'target' => ['Controllers\AssignInventoryController', 'index']
+   ]
 
 ];
 $deleteRoutes = [
@@ -94,7 +113,16 @@ $deleteRoutes = [
       'url' => '/employees/employee',
       'target' => ['Controllers\EmployeeController', 'delete']
    ],
+   [
+      'url' => '/inventory-items/item',
+      'target' => ['Controllers\InventoryController', 'delete']
+   ],
+   [
+      'url' => '/employees/employee/inventory-items/item',
+      'target' => ['Controllers\AssignInventoryController', 'delete']
+   ]
 ];
+
 
 $router->addRoutes('POST', $postRoutes);
 $router->addRoutes('GET', $getRoutes);
