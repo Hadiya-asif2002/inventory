@@ -21,8 +21,7 @@
         "Database\\":"database/",
         "Controllers\\":"controllers/",
         "Mail\\":"Mail/",
-        "Helpers\\":"Helpers/",
-        "Models\\":"Models/"
+        "Helpers\\":"Helpers/"
 
     }
 },

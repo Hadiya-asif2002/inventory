@@ -8,13 +8,15 @@ CREATE TABLE departments(
 );
 CREATE TABLE employees(
     id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
-    userid INT,
     name VARCHAR(50),
     designation  VARCHAR(30),
     reports_to VARCHAR(50),
     department_id INT NOT NULL,
+    tag varchar(50),
+    floor varchar(50),
+    anydesk_address VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE
 );
 

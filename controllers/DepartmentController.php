@@ -1,7 +1,7 @@
 <?php
 namespace Controllers;
 use \Illuminate\Database\Capsule\Manager as Capsule;
-use Helpers\Helpers;
+use \Helpers\Helpers;
 use \PDOException;
 
 class DepartmentController
@@ -11,7 +11,7 @@ class DepartmentController
     {
         $departments = Capsule::table('departments')->get();
         $departments = json_decode(json_encode($departments), true);
-        Helpers::sendJsonResponse(200, 'Departments retrieved successfully.', $departments);
+        return Helpers::sendJsonResponse(200, 'Departments retrieved successfully.', $departments);
     }
 
     public static function create($data)
@@ -19,25 +19,35 @@ class DepartmentController
         $departmentExists = Capsule::table('departments')->where('name', '=', $data['name'])->value('name');
         if (!$departmentExists) {
             $department = Capsule::table('departments')->insert($data);
-            Helpers::sendJsonResponse(201, 'Department created successfully.', $department);
+             return Helpers::sendJsonResponse(201, 'Department created successfully.', $department);
         }
-        Helpers::sendJsonResponse(400, 'Department already exists.');
+        else{
+        return Helpers::sendJsonResponse(400, 'Department already exists.');
+
+        }
     }
 
     public static function update($data)
     {
-        try {
-            $department = Capsule::table('departments')->where('name', '=', $data['old_name'])->update(['name' => $data['new_name']]);
-            if ($department) {
-                Helpers::sendJsonResponse(200, 'Department updated successfully.', $department);
-            } else {
-                $message = 'Department not found.';
-            }
-        } catch (PDOException $e) {
-            $message = 'Department already exists';
-        }
-        Helpers::sendJsonResponse(400,$message);
 
+        $department = Capsule::table('departments')->where('id', '=', $data['id'])->update(['name' => $data['name']]);
+        if ($department) {
+            return Helpers::sendJsonResponse(200, 'Department updated successfully.', $department);
+        } else {
+            return Helpers::sendJsonResponse(400,'Department not found.');
+        }
+    }
+
+    
+    
+    public static function createAndUpdate($data)
+    {
+        if(isset($data['id'])) {
+            self::update($data);
+        }
+        else{
+            self::create($data);
+        }
     }
 
     public static function delete($data)
@@ -45,9 +55,9 @@ class DepartmentController
       
         $deleted = Capsule::table('departments')->where('id', '=', $data['id'])->delete();
         if ($deleted) {
-            Helpers::sendJsonResponse(200, 'Department deleted successfully.');
+            return Helpers::sendJsonResponse(200, 'Department deleted successfully.');
         } else {
-            Helpers::sendJsonResponse(404, 'Department not found.');
+            return Helpers::sendJsonResponse(404, 'Department not found.');
         }
     }
 }

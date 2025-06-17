@@ -1,6 +1,6 @@
 <?php
-namespace Helpers;
-class Helpers{
+namespace  Helpers;
+class  Helpers{
 
  
     
@@ -24,5 +24,15 @@ class Helpers{
         header("Content-type: application/json; charset=utf-8");
         echo json_encode($response);
         }
-    
+    public static function createUpdateTable($tableName, $data) {
+        if(isset($data['id'])){
+            Capsule::table($tableName)
+                ->where('id', $data['id'])
+                ->update($data);
+        }
+        else{
+            Capsule::table($tableName)
+                ->insert($data);
+        }
+    }
 }

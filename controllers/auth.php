@@ -8,7 +8,7 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use \Carbon\Carbon;
 use Mail\Mail;
-use Helpers\Helpers;
+use \Helpers\Helpers;
 
 $key = parse_ini_file('.env')['JWT_KEY'];
 
@@ -34,10 +34,10 @@ class Auth
             $jwt = JWT::encode($payload, JWT_KEY, 'HS256');
             $authHeader = ['Authorization: Bearer ' . $jwt];
             setcookie('Authorization', $jwt, time() + 3600);
-            Helpers::sendJsonResponse(200, 'Logged in successfully.', [], $authHeader);
+            return Helpers::sendJsonResponse(200, 'Logged in successfully.', [], $authHeader);
         }
         $message = $user? 'Invalid Credentials.' : 'User not found.';
-        Helpers::sendJsonResponse(400, $message);
+        return Helpers::sendJsonResponse(400, $message);
 
     }
     public static function logout()
@@ -45,7 +45,7 @@ class Auth
         if (isset($_COOKIE['Authorization'])) {
             setcookie('Authorization', '', time() - 3600);
         }
-        Helpers::sendJsonResponse(200, 'Logged out successfully.');
+        return Helpers::sendJsonResponse(200, 'Logged out successfully.');
 
     }
 
@@ -64,14 +64,14 @@ class Auth
                 if ($user && password_verify($oldPassword, $user->password)) {
                     $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
                     Capsule::table('users')->where('id', '=', $decoded->id)->update(['password' => $newPassword]);
-                    Helpers::sendJsonResponse(200, 'Password reset successfully.');
+                    return Helpers::sendJsonResponse(200, 'Password reset successfully.');
                 } else {
                     $message = 'Old password is invalid.';
                 }
             } else {
                 $message = 'Passwords donot match';
             }
-            Helpers::sendJsonResponse(400, $message);
+            return Helpers::sendJsonResponse(400, $message);
         }
 
     }
@@ -89,9 +89,9 @@ class Auth
         if ($user) {
             $url = 'https://localhost/inventory/reset-password?' . 'email=' . $email . '&token=' . $token;
             Mail::sendMail($user->username, $url);
-            Helpers::sendJsonResponse(200, 'Reset password link sent.', $data);  //improve the status codes
+            return Helpers::sendJsonResponse(200, 'Reset password link sent.', $data);  //improve the status codes
         }
-        Helpers::sendJsonResponse(400, 'user not found', );
+        return Helpers::sendJsonResponse(400, 'user not found', );
 
     }
     public static function submitForgotPassword($data)
@@ -104,12 +104,12 @@ class Auth
             if ($user && $user->expires_at > Carbon::now()) {
                 Capsule::table('users')->where('email', '=', $email)->update(['password' => $password]);
                 self::login($data);
-                Helpers::sendJsonResponse(200, 'Password updated successfully');  //improve the status codes
+                return Helpers::sendJsonResponse(200, 'Password updated successfully');  //improve the status codes
             
             }
         }
 
-        Helpers::sendJsonResponse(400, 'Invalid credentials');  //improve the status codes
+        return Helpers::sendJsonResponse(400, 'Invalid credentials');  //improve the status codes
 
     }
 

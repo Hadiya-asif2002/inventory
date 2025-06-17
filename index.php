@@ -33,19 +33,11 @@ $postRoutes = [
    ],
    [
       'url' => '/departments',
-      'target' => ['Controllers\DepartmentController', 'create']
-   ],
-   [
-      'url' => '/departments/department',
-      'target' => ['Controllers\DepartmentController', 'update']
+      'target' => ['Controllers\DepartmentController', 'createAndUpdate']
    ],
    [
       'url' => '/employees',
-      'target' => ['Controllers\EmployeeController', 'create']
-   ],
-   [
-      'url' => '/employees/employee',
-      'target' => ['Controllers\EmployeeController', 'update']
+      'target' => ['Controllers\EmployeeController', 'createAndUpdate']
    ],
    [
       'url' => '/inventory-items',
